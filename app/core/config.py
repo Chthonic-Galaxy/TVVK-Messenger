@@ -13,7 +13,9 @@ class Settings(BaseSettings):
     
     API_V1_STR: str = "/api/v1"
     PROJECT_NAME: str = "Messenger"
-    BACKEND_CORS_ORIGINS: list[str] = ["*"] # Разрешить все источники (для разработки)
+    BACKEND_CORS_ORIGINS: list[str] = ["*"] # Allow all sources (for development)
+    
+    DB_ECHO: bool = False
     
     DB_USER: str
     DB_PASSWORD: str
