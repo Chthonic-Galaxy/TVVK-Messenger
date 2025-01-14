@@ -17,3 +17,7 @@ class UserRead(BaseModel):
     email: EmailStr
     username: str
     nickname: Optional[str] = None
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: Annotated[str, StringConstraints()]
