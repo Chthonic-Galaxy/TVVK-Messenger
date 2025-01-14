@@ -11,10 +11,12 @@ class Settings(BaseSettings):
         case_sensitive=True
     )
     
+    # Backend
     API_V1_STR: str = "/api/v1"
     PROJECT_NAME: str = "Messenger"
     BACKEND_CORS_ORIGINS: list[str] = ["*"] # Allow all sources (for development)
     
+    # DataBase
     DB_ECHO: bool = False
     
     DB_USER: str
@@ -22,6 +24,11 @@ class Settings(BaseSettings):
     DB_HOST: str
     DB_PORT: int
     DB_NAME: str
+    
+    # Auth
+    AUTH_SECRET_KEY: str
+    AUTH_ALGORITHM: str
+    AUTH_DEFAULT_ACCESS_TOKEN_EXP_MIN: int
     
     def database_url(self) -> PostgresDsn:
         return MultiHostUrl.build(
