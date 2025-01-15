@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from app.api.endpoints import auth
+from app.api.endpoints import auth, users
 from app.core.config import settings
 
 app = FastAPI(title=settings.PROJECT_NAME)
@@ -17,3 +17,4 @@ if settings.BACKEND_CORS_ORIGINS:
     )
 
 app.include_router(auth.router, prefix=f"{settings.API_V1_STR}/auth", tags=["authentication"])
+app.include_router(users.router, prefix=f"{settings.API_V1_STR}/users", tags=["users"])
