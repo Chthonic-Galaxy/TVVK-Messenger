@@ -27,8 +27,8 @@ class Settings(BaseSettings):
     
     # Auth
     AUTH_SECRET_KEY: str
-    AUTH_ALGORITHM: str
-    AUTH_DEFAULT_ACCESS_TOKEN_EXP_MIN: int
+    AUTH_ALGORITHM: str = "HS256"
+    AUTH_DEFAULT_ACCESS_TOKEN_EXP_MIN: int = 30
     
     def database_url(self) -> PostgresDsn:
         return MultiHostUrl.build(

@@ -1,6 +1,7 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
 from starlette.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -43,6 +44,17 @@ async def register_user(user_in: user_schema.UserCreate, session: AsyncSession =
 async def login_access_token(form_data: user_schema.UserLogin, session: AsyncSession = Depends(get_async_session)):
     user = await session.scalar(
         select(user_model.User).where(user_model.User.email == form_data.email)
+    )
+    if not user or not verify_password(form_data.password, user.hashed_password):
+        raise HTTPException(status_code=HTTP_400_BAD_REQUEST, detail="Incorrect email or password")
+    access_token = create_access_token(subject=user.username)
+    return {"access_token": access_token, "token_type": "bearer"}
+
+# endpoit for standard OAuth2 form
+@router.post("/token", response_model=token_schema.Token)
+async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], session: AsyncSession = Depends(get_async_session)):
+    user = await session.scalar(
+        select(user_model.User).where(user_model.User.email == form_data.username) # We using 'email' insted 'username' for loging, but form_data has 'username' field by standard
     )
     if not user or not verify_password(form_data.password, user.hashed_password):
         raise HTTPException(status_code=HTTP_400_BAD_REQUEST, detail="Incorrect email or password")
