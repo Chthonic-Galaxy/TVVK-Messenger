@@ -1,7 +1,7 @@
 from .user import User
+from .contact import Contact
 # from .group import Group
 # from .message import Message
-# from .contact import Contact
 # from .file import File
 # from .channel import Channel
 # from .group_member import GroupMember
@@ -10,9 +10,9 @@ from .user import User
 
 __all__ = [
     "User",
+    "Contact",
     # "Group",
     # "Message",
-    # "Contact",
     # "File",
     # "Channel",
     # "GroupMember",
