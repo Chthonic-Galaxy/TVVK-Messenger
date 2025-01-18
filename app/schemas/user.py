@@ -18,6 +18,18 @@ class UserRead(BaseModel):
     username: str
     nickname: Optional[str] = None
 
+class UserPublic(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    username: str
+    nickname: Optional[str] = None
+
 class UserLogin(BaseModel):
     email: EmailStr
     password: Annotated[str, StringConstraints()]
+
+class SearchUsersResult(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    
+    in_contacts: list[UserPublic]
+    users: list[UserPublic]

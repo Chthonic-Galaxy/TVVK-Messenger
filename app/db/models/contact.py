@@ -11,4 +11,4 @@ class Contact(Base):
     contact_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     
     user = relationship("User", foreign_keys=[user_id])
-    contact = relationship("User", foreign_keys=[contact_id])
+    contact = relationship("User", foreign_keys=[contact_id], remote_side="User.id")
