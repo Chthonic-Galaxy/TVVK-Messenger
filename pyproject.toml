@@ -26,6 +26,11 @@ dependencies = [
 [tool.poetry]
 package-mode = false
 
+[tool.poetry.group.dev-tools.dependencies]
+requests = "^2.32.3"
+faker = "^33.3.1"
+aiohttp = "^3.11.11"
+
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
