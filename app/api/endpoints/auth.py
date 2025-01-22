@@ -10,7 +10,7 @@ from app.schemas import user as user_schema
 from app.schemas import token as token_schema
 from app.db import models as user_model
 from app.db.session import get_async_session
-from app.core.security import get_password_hash, verify_password, create_access_token
+from app.core.security.jwt import get_password_hash, verify_password, create_access_token
 
 router = APIRouter()
 
@@ -33,7 +33,8 @@ async def register_user(user_in: user_schema.UserCreate, session: AsyncSession =
         email=user_in.email,
         hashed_password=hashed_password,
         username=user_in.username,
-        nickname=user_in.nickname
+        nickname=user_in.nickname,
+        public_key=user_in.public_key
     )
     session.add(db_user)
     await session.commit()

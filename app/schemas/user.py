@@ -8,6 +8,7 @@ class UserCreate(BaseModel):
     password: Annotated[str, StringConstraints(min_length=8)]
     username: Annotated[str, StringConstraints(min_length=3, max_length=50)]
     nickname: Optional[Annotated[str, StringConstraints(max_length=50)]] = None
+    public_key: Optional[str] = None
 
 
 class UserRead(BaseModel):
@@ -17,6 +18,7 @@ class UserRead(BaseModel):
     email: EmailStr
     username: str
     nickname: Optional[str] = None
+    public_key: Optional[str] = None
 
 class UserPublic(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -31,5 +33,4 @@ class UserLogin(BaseModel):
 class SearchUsersResult(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     
-    in_contacts: list[UserPublic]
     users: list[UserPublic]

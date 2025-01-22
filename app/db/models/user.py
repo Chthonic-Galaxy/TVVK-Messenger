@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, BigInteger, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.sql import func
 from app.db.base import Base
 
@@ -11,3 +11,4 @@ class User(Base):
     username = Column(String(50), unique=True, nullable=False)
     nickname = Column(String(50), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+    public_key = Column(String, nullable=True)
