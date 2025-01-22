@@ -5,4 +5,7 @@ __pycache__/
 
 poetry.toml
 
+S_DEVELOPMENT/
 progress.md
+todo.md
+tests/fakes/

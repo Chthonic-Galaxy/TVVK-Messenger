@@ -24,34 +24,16 @@ async def search_users(
     offset: int = Query(0, ge=0),
     session: AsyncSession = Depends(get_async_session)
 ):
-    in_contact_query = (
-        select(user_model.User).options(load_only(user_model.User.username, user_model.User.nickname))
-        .join(contact_model.Contact, contact_model.Contact.contact_id == user_model.User.id)
-        .where(contact_model.Contact.user_id == current_user.id)
-    )
-    
-    users_query = select(user_model.User).options(load_only(user_model.User.username, user_model.User.nickname))
+    query = select(user_model.User)
     
     if search:
-        in_contact_query = in_contact_query.where(
-            or_(
-                user_model.User.username.icontains(search),
-                user_model.User.nickname.icontains(search),
-            )
-        )
-        users_query = users_query.where(
+        query = query.where(
             or_(
                 user_model.User.username.icontains(search),
                 user_model.User.nickname.icontains(search),
             )
         )
     
-    in_contacts_users = (await session.scalars(in_contact_query.limit(limit).offset(offset))).all()
-    
-    users_not_in_contacts = (await session.scalars(
-        users_query.filter(user_model.User.id.not_in([user.id for user in in_contacts_users])).limit(limit).offset(offset)
-    )).all()
-    print({"in_contacts": in_contacts_users, "users": users_not_in_contacts})
-    
-    return {"in_contacts": in_contacts_users, "users": users_not_in_contacts}
+    users = (await session.scalars(query.limit(limit).offset(offset))).all()
+    return {"users": users}
     

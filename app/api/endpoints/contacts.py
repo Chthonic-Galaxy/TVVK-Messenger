@@ -62,7 +62,7 @@ async def create_contact(
 
     return result
 
-@router.get("/", response_model=list[contact_schema.ContactRead])
+@router.get("/me", response_model=list[contact_schema.ContactRead])
 async def read_contacts(
     current_user: CurrentUser,
     session: AsyncSession = Depends(get_async_session)
